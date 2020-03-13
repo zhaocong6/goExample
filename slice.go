@@ -12,5 +12,11 @@ func main() {
 	slice3[0] = slice
 	slice3[1] = slice2
 
-	fmt.Println(slice, slice2, slice3)
+	arr := [...]int{1,2,3,4}
+	//通过切割array实现slice
+	slice4 := arr[:3]
+
+	slice3[2] = slice4
+
+	fmt.Println(slice, slice2, slice3, slice4)
 }
