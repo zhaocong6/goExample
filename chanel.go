@@ -26,4 +26,23 @@ func main() {
 		defer func() { ch <- 3 }()
 	}()
 	fmt.Printf("缓存ch%d\r\n", <-ch)
+
+	//使用chan进行通讯
+	pingCh := make(chan string)
+	pongCh := make(chan string)
+	go ping(pingCh)
+	go pong(pingCh, pongCh)
+
+	fmt.Println(<-pongCh)
+}
+
+func ping(pingCh chan string) {
+	pingCh <- "ping"
+}
+
+func pong(pingCh chan string, pongCh chan string) {
+	ping := <-pingCh
+	if ping == "ping" {
+		pongCh <- "pong"
+	}
 }
