@@ -14,6 +14,7 @@ func main() {
 	f := NewFile()
 	defer f.Close()
 
+	log.SetOutput(f)
 	debugLog := log.New(f, "[Debug]", log.LstdFlags|log.Lshortfile)
 	infoLog := log.New(f, "[Info]", log.LstdFlags|log.Lshortfile)
 
@@ -21,6 +22,7 @@ func main() {
 		if err := recover(); err != nil {
 			debugLog.Println(err)
 			infoLog.Println(err)
+			log.Println(err)
 		}
 	}()
 
