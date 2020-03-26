@@ -15,6 +15,7 @@ func main() {
 	defer f.Close()
 
 	log.SetOutput(f)
+	log.Flags()
 	debugLog := log.New(f, "[Debug]", log.LstdFlags|log.Lshortfile)
 	infoLog := log.New(f, "[Info]", log.LstdFlags|log.Lshortfile)
 
