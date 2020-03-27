@@ -1,0 +1,18 @@
+version: "0.1"
+app: "example"
+
+redis:
+  default:
+    host: locahost
+    port: 6379
+    password: ~
+    database: 0
+    maxIdle: 3
+
+mysql:
+  default:
+    host: locahost
+    port: 6379
+    user: root
+    password: root
+    pool: false

@@ -13,4 +13,5 @@ func main() {
 	arrToArr := [2][3]int{arr, arr2}
 
 	fmt.Println(arr, arr2, arrToArr)
+
 }
