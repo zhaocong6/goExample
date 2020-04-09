@@ -6,8 +6,9 @@ import (
 
 type User struct {
 	Model
-	Username uint   `gorm:"not null;unique"`
-	Password string `gorm:"type:varchar(255);not null"`
+	Username uint      `gorm:"not null;unique"`
+	Password string    `gorm:"type:varchar(255);not null"`
+	Articles []*Article `gorm:"ForeignKey:UserId"`
 }
 
 func (u *User) Add() *gorm.DB {
@@ -20,4 +21,12 @@ func (u *User) FirstByUsername() {
 
 func (*User) TableName() string {
 	return "users"
+}
+
+func (u *User) Related(s string) {
+	db.Model(&u).Related(s)
+}
+
+func (u *User) Save() *gorm.DB {
+	return db.Save(&u)
 }
