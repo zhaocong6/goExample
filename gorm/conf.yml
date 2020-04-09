@@ -1,0 +1,9 @@
+db:
+  type: mysql
+  user: root
+  password: root
+  host: 127.0.0.1
+  port: 3306
+  database: gormExample
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
