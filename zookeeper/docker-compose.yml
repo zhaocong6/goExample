@@ -1,0 +1,15 @@
+version: "3"
+
+networks:
+  backend:
+
+services:
+
+  zookeeper1:
+    image: zookeeper
+    restart: always
+    container_name: zookeeper1
+    networks:
+      - backend
+    ports:
+      - "2181:2181"
