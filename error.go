@@ -31,11 +31,15 @@ func main() {
 	}
 
 	err = f2(1)
-	if _, ok := err.(argError); ok {
+
+	if cause, ok := err.(argError); ok {
 		fmt.Println("参数错误")
 		fmt.Println(err)
 		//转换成字符串
 		fmt.Println(err.Error())
+		//获取原始的错误类型数据
+		fmt.Println(cause.line)
+		fmt.Println(cause.code)
 	}
 }
 
