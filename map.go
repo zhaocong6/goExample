@@ -3,7 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	m := make(map[int]int)
+	//推荐初始化map长度, 超过后会自己扩容
+	m := make(map[int]int, 1)
 	m[1] = 1
 	m[3] = 3
 	m[2] = 2
