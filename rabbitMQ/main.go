@@ -11,28 +11,34 @@ func main() {
 	use()
 }
 
-func pub() {
+func conn() *amqp.Connection {
 	var uri = fmt.Sprintf("amqp://%s:%s@%s:%d", "guest", "guest", "127.0.0.1", 5672)
 
 	//创建一个mq连接
 	conn, err := amqp.Dial(uri)
 	if err != nil {
 		log.Panic(err)
-		return
+		return nil
 	}
-	defer conn.Close()
 
-	//创建一个channel
+	return conn
+}
+
+func channel(conn *amqp.Connection) *amqp.Channel {
 	channel, err := conn.Channel()
 	if err != nil {
 		log.Panic(err)
-		return
+		return nil
 	}
-	defer channel.Close()
 
+	return channel
+}
+
+func pub() {
+	channel := channel(conn())
 	//声明一个test的直连交换机
 	//持久化
-	err = channel.ExchangeDeclare("testExchange", "direct", true, false, false, false, nil)
+	err := channel.ExchangeDeclare("testExchange", "direct", true, false, false, false, nil)
 	if err != nil {
 		log.Panic(err)
 		return
@@ -65,23 +71,7 @@ func pub() {
 }
 
 func use() {
-	var uri = fmt.Sprintf("amqp://%s:%s@%s:%d", "guest", "guest", "127.0.0.1", 5672)
-
-	//创建一个mq连接
-	conn, err := amqp.Dial(uri)
-	if err != nil {
-		log.Panic(err)
-		return
-	}
-	defer conn.Close()
-
-	//创建一个channel
-	channel, err := conn.Channel()
-	if err != nil {
-		log.Panic(err)
-		return
-	}
-	defer channel.Close()
+	channel := channel(conn())
 
 	//声明一个队列
 	q, err := channel.QueueDeclare("testQueue", true, false, false, false, nil)
