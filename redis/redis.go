@@ -38,15 +38,15 @@ func main() {
 
 	num := "0"
 	for {
-		arr, _ := red.Values(con.Do("scan", num, "MATCH", "m*", "COUNT", 3))
+		arr, _ := red.Values(con.Do("scan", num, "MATCH", "m*", "COUNT", 100))
+
+		for _, i := range arr[1].([]interface{}) {
+			fmt.Println(string(i.([]byte)))
+		}
 
 		num = string(arr[0].([]byte))
 		if num == "0" {
 			break
-		}
-
-		for _, i := range arr[1].([]interface{}) {
-			fmt.Println(string(i.([]byte)))
 		}
 	}
 }
