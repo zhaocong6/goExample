@@ -35,6 +35,18 @@ func init() {
 
 func main() {
 	con := redis.pool.Get()
-	fmt.Println(con.Do("set", "test", "测试"))
-	fmt.Println(red.String(con.Do("get", "test")))
+
+	num := "0"
+	for {
+		arr, _ := red.Values(con.Do("scan", num, "MATCH", "m*", "COUNT", 3))
+
+		num = string(arr[0].([]byte))
+		if num == "0" {
+			break
+		}
+
+		for _, i := range arr[1].([]interface{}) {
+			fmt.Println(string(i.([]byte)))
+		}
+	}
 }
