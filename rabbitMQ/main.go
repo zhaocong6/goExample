@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	pub()
+	//pub()
 	use()
 }
 
 func conn() *amqp.Connection {
-	var uri = fmt.Sprintf("amqp://%s:%s@%s:%d", "guest", "guest", "127.0.0.1", 5672)
+	var uri = fmt.Sprintf("amqp://%s:%s@%s:%d", "test", "test", "172.16.40.185", 5672)
 
 	//创建一个mq连接
 	conn, err := amqp.Dial(uri)
@@ -74,14 +74,14 @@ func use() {
 	channel := channel(conn())
 
 	//声明一个队列
-	q, err := channel.QueueDeclare("testQueue", true, false, false, false, nil)
+	q, err := channel.QueueDeclare("match", true, false, false, false, nil)
 	if err != nil {
 		log.Panic(err)
 		return
 	}
 
 	//注册消费者
-	msg, err := channel.Consume(q.Name, "testConsume", true, false, false, false, nil)
+	msg, err := channel.Consume(q.Name, "match", true, false, false, false, nil)
 	if err != nil {
 		log.Panic(err)
 		return
@@ -93,9 +93,7 @@ func use() {
 		for {
 			select {
 			case res := <-msg:
-				log.Println(res.Type)
-				log.Println(res.MessageId)
-				log.Printf("Received a message: %s", res.Body)
+				fmt.Println(string(res.Body))
 			}
 		}
 	}()
