@@ -24,7 +24,7 @@ func main() {
 
 	j := &req{
 		Sub:    "depth",
-		Symbol: "btc-usdt",
+		Symbol: "BTC/USDT",
 		Depth:  5,
 	}
 
