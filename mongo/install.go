@@ -1,11 +1,10 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang.org/x/net/context"
 	"log"
 )
 
@@ -38,8 +37,8 @@ func main() {
 	}
 
 	students := []interface{}{s1, s2}
-	res, err := collection.InsertMany(context.TODO(), students)
 
-	fmt.Println(res.InsertedIDs[0].(primitive.ObjectID).String())
-	fmt.Println(res.InsertedIDs[1].(primitive.ObjectID).String())
+	res1, err := collection.InsertOne(context.TODO(), students[0])
+	res2, err := collection.InsertMany(context.TODO(), students)
+	fmt.Println(res1, res2)
 }
